@@ -1,6 +1,6 @@
-package com.mpanh.chat.repository;
+package chat.repository;
 
-import com.mpanh.chat.model.ChatRoom;
+import chat.model.ChatRoom;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

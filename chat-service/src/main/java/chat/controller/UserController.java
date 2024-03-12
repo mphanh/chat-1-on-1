@@ -1,7 +1,7 @@
-package com.mpanh.chat.controller;
+package chat.controller;
 
-import com.mpanh.chat.service.UserService;
-import com.mpanh.chat.model.User;
+import chat.service.UserService;
+import chat.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;

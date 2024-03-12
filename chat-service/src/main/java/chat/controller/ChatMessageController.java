@@ -1,8 +1,8 @@
-package com.mpanh.chat.controller;
+package chat.controller;
 
-import com.mpanh.chat.model.ChatMessage;
-import com.mpanh.chat.model.ChatNotification;
-import com.mpanh.chat.service.ChatMessageService;
+import chat.model.ChatNotification;
+import chat.model.ChatMessage;
+import chat.service.ChatMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;

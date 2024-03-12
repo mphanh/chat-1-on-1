@@ -1,4 +1,4 @@
-package com.mpanh.chat.model;
+package chat.model;
 
 import lombok.*;
 

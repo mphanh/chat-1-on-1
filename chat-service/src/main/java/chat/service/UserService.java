@@ -1,9 +1,8 @@
-package com.mpanh.chat.service;
+package chat.service;
 
-import com.mpanh.chat.repository.UserRepository;
-import com.mpanh.chat.model.Status;
-import com.mpanh.chat.model.User;
-import lombok.RequiredArgsConstructor;
+import chat.model.Status;
+import chat.model.User;
+import chat.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

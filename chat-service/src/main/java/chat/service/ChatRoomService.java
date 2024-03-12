@@ -1,7 +1,7 @@
-package com.mpanh.chat.service;
+package chat.service;
 
-import com.mpanh.chat.model.ChatRoom;
-import com.mpanh.chat.repository.ChatRoomRepository;
+import chat.model.ChatRoom;
+import chat.repository.ChatRoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

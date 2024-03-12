@@ -1,4 +1,4 @@
-package com.mpanh.chat;
+package chat;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

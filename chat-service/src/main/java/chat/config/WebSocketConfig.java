@@ -1,4 +1,4 @@
-package com.mpanh.chat.config;
+package chat.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Configuration;
