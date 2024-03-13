@@ -1,31 +1,98 @@
 <template>
-  <div class="wrapper">
-    <div class="user-form" id="username-page">
-      <h2>Enter Chatroom</h2>
-      <form id="usernameForm">
-        <label for="nickname">Nickname:</label>
-        <input type="text" id="nickname" name="nickname" required />
+  <div class="user-form" id="username-page">
+    <h2>Enter Chatroom</h2>
+    <form id="usernameForm">
+      <label for="nickname">Nickname:</label>
+      <input
+        type="text"
+        v-model="nickname"
+        id="nickname"
+        name="nickname"
+        required
+      />
 
-        <label for="fullname">Real Name:</label>
-        <input type="text" id="fullname" name="realname" required />
+      <label for="fullname">Real Name:</label>
+      <input
+        type="text"
+        v-model="fullname"
+        id="fullname"
+        name="fullname"
+        required
+      />
 
-        <button type="submit">Enter Chatroom</button>
-      </form>
-    </div>
+      <button @click="connect">Enter Chatroom</button>
+    </form>
   </div>
 </template>
 
 <script>
+import SockJS from 'sockjs-client';
+import Stomp from 'stompjs';
 export default {
   name: "AuthForm",
+  data() {
+    return {
+      fullname: "",
+      nickname: "",
+    };
+  },
+  methods: {
+    connect(event) {
+      // this.nickname = document.querySelector("#nickname").value.trim();
+      // this.fullname = document.querySelector("#fullname").value.trim();
+
+      if (this.nickname && this.fullname) {
+        // usernamePage.classList.add("hidden");
+        // chatPage.classList.remove("hidden");
+
+        const socket = new SockJS("http://localhost:8088/ws");
+        const stompClient = Stomp.over(socket);
+
+        // stompClient.connect({}, onConnected, onError);
+        stompClient.connect({}, () => {
+          stompClient.send(
+            "/app/user.addUser",
+            {},
+            JSON.stringify({
+              nickName: this.nickname,
+              fullName: this.fullname,
+              status: "ONLINE",
+            })
+          );
+          this.$router.push({
+            name: "ChatPage",
+            params: { nickname: this.nickname, fullname: this.fullname },
+          });
+        });
+      }
+      event.preventDefault();
+    },
+    // onConnected() {
+    //   stompClient.subscribe(
+    //     `/user/${this.nickname}/queue/messages`,
+    //     onMessageReceived
+    //   );
+    //   stompClient.subscribe(`/user/public`, onMessageReceived);
+
+    //   // register the connected user
+    //   stompClient.send(
+    //     "/app/user.addUser",
+    //     {},
+    //     JSON.stringify({
+    //       nickName: this.nickname,
+    //       fullName: this.fullname,
+    //       status: "ONLINE",
+    //     })
+    //   );
+    //   document.querySelector("#connected-user-fullname").textContent =
+    //     this.fullname;
+    //   findAndDisplayConnectedUsers().then();
+    // },
+  },
 };
 </script>
 
 <style scoped>
-.wrapper {
-  justify-content: center;
-  display: flex;
-}
 .user-form {
   max-width: 400px;
   padding: 40px;

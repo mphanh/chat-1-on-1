@@ -1,18 +1,17 @@
 <template>
-  <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-  <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
   <AuthForm />
+  <ChatPage />
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
 import AuthForm from './components/AuthForm.vue'
+import ChatPage from './components/ChatPage.vue'
 
 export default {
   name: 'App',
   components: {
-    // HelloWorld,
-    AuthForm
+    AuthForm,
+    ChatPage
   }
 }
 </script>
@@ -25,5 +24,7 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  justify-content: center;
+  display: flex;
 }
 </style>
