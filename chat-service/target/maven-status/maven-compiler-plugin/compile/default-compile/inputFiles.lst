@@ -13,3 +13,4 @@ G:\chat-1-on-1\chat-service\src\main\java\chat\controller\UserController.java
 G:\chat-1-on-1\chat-service\src\main\java\chat\repository\ChatMessageRepository.java
 G:\chat-1-on-1\chat-service\src\main\java\chat\config\WebSocketConfig.java
 G:\chat-1-on-1\chat-service\src\main\java\chat\model\ChatNotification.java
+G:\chat-1-on-1\chat-service\src\main\java\chat\config\CorsConfig.java

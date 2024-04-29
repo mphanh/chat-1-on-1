@@ -11,3 +11,7 @@ spring:
     static-locations: classpath:/static/
 server:
   port: 8088
+#logging:
+#  level:
+#    root: DEBUG
+#    chat.config: DEBUG

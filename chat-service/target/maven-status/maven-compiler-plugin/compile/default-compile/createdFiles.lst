@@ -6,6 +6,7 @@ chat\model\ChatMessage.class
 chat\model\ChatNotification.class
 chat\config\WebSocketConfig.class
 chat\model\ChatRoom$ChatRoomBuilder.class
+chat\config\CorsConfig.class
 chat\controller\ChatMessageController.class
 chat\controller\UserController.class
 chat\service\ChatRoomService.class
