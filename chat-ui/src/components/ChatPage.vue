@@ -1,18 +1,22 @@
 <template>
   <div class="chat-container hidden" id="chat-page">
-    <UserList :nickname="nickname" :fullname="fullName" />
+    <UserList :nickname="nickname" :fullname="fullname" />
 
     <div class="chat-area">
-      <div class="chat-area" id="chat-messages"></div>
+      <!-- <div class="chat-area" id="chat-messages"></div> -->
+      <div class="chat-area" id="chat-messages" v-for="(message, index) in messages" :key="index">
+        <p>{{ message }}</p>
+      </div>
 
       <form id="messageForm" name="messageForm">
         <div class="message-input">
-          <input
+          <!-- <input
             autocomplete="off"
             type="text"
             id="message"
             placeholder="Type your message..."
-          />
+          /> -->
+          <input id="message" v-model="newMessage" @keyup.enter="sendMessage" placeholder="Type a message..." />
           <button>Send</button>
         </div>
       </form>
@@ -30,7 +34,16 @@ export default {
     return {
       fullname: "",
       nickname: "",
+      messages: [],
+      newMessage: "",
     };
+  },
+  methods: {
+    sendMessage() {
+      const stompClient = this.$root.provides.stompClient;
+      stompClient.publish({ destination: '/app/chat', body: this.newMessage });
+      this.newMessage = '';
+    },
   },
 };
 </script>
@@ -108,7 +121,7 @@ export default {
   border-radius: 5px;
   cursor: pointer;
 }
-.hidden {
+/* .hidden {
   display: none;
-}
+} */
 </style>

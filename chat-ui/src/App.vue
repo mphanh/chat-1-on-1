@@ -1,17 +1,18 @@
 <template>
-  <AuthForm />
-  <ChatPage />
+  <!-- <AuthForm /> -->
+  <router-view></router-view>
+  <!-- <ChatPage /> -->
 </template>
 
 <script>
-import AuthForm from './components/AuthForm.vue'
-import ChatPage from './components/ChatPage.vue'
+// import AuthForm from './components/AuthForm.vue'
+// import ChatPage from './components/ChatPage.vue'
 
 export default {
   name: 'App',
   components: {
-    AuthForm,
-    ChatPage
+    // AuthForm,
+    // ChatPage
   }
 }
 </script>

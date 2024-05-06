@@ -6,7 +6,7 @@
       </div>
       <div>
         <p id="connected-user-fullname"></p>
-        <a class="logout" href="javascript:void(0)" id="logout">Logout</a>
+        <a class="logout" href="/" id="logout">Logout</a>
       </div>
     </div>
 </template>

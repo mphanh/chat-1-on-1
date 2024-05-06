@@ -26,8 +26,8 @@
 </template>
 
 <script>
-import SockJS from 'sockjs-client';
-import Stomp from 'stompjs';
+// import SockJS from "sockjs-client";
+// import Stomp from "stompjs";
 export default {
   name: "AuthForm",
   data() {
@@ -38,15 +38,10 @@ export default {
   },
   methods: {
     connect(event) {
-      // this.nickname = document.querySelector("#nickname").value.trim();
-      // this.fullname = document.querySelector("#fullname").value.trim();
-
       if (this.nickname && this.fullname) {
-        // usernamePage.classList.add("hidden");
-        // chatPage.classList.remove("hidden");
-
-        const socket = new SockJS("http://localhost:8088/ws");
-        const stompClient = Stomp.over(socket);
+        // const socket = new SockJS("http://localhost:8088/ws");
+        // stompClient = Stomp.over(socket);
+        const stompClient = this.$root.provides.stompClient;
 
         // stompClient.connect({}, onConnected, onError);
         stompClient.connect({}, () => {
@@ -88,6 +83,24 @@ export default {
     //     this.fullname;
     //   findAndDisplayConnectedUsers().then();
     // },
+    onConnect() {
+      const stompClient = this.$root.provides.stompClient;
+      stompClient.subscribe(`/user/${this.nickname}/queue/messages`, onMessageReceived);
+      stompClient.subscribe(`/user/public`, onMessageReceived);
+      stompClient.send(
+        "/app/user.addUser",
+        {},
+        JSON.stringify({
+          nickName: this.nickname,
+          fullName: this.fullname,
+          status: "ONLINE",
+        })
+      );
+      this.$router.push({
+        name: "ChatPage",
+        params: { nickname: this.nickname, fullname: this.fullname },
+      });
+    },
   },
 };
 </script>
