@@ -21,85 +21,61 @@
       />
 
       <button @click="connect">Enter Chatroom</button>
+      <p class="error">{{ error }}</p>
     </form>
   </div>
 </template>
 
 <script>
-// import SockJS from "sockjs-client";
-// import Stomp from "stompjs";
+import SockJS from "sockjs-client";
+import Stomp from "stompjs";
 export default {
   name: "AuthForm",
   data() {
     return {
       fullname: "",
       nickname: "",
+      error: ""
     };
   },
   methods: {
     connect(event) {
       if (this.nickname && this.fullname) {
-        // const socket = new SockJS("http://localhost:8088/ws");
-        // stompClient = Stomp.over(socket);
-        const stompClient = this.$root.provides.stompClient;
-
-        // stompClient.connect({}, onConnected, onError);
-        stompClient.connect({}, () => {
-          stompClient.send(
-            "/app/user.addUser",
-            {},
-            JSON.stringify({
-              nickName: this.nickname,
-              fullName: this.fullname,
-              status: "ONLINE",
-            })
-          );
-          this.$router.push({
-            name: "ChatPage",
-            params: { nickname: this.nickname, fullname: this.fullname },
-          });
-        });
+        const socket = new SockJS("http://localhost:8088/ws");
+        const stompClient = Stomp.over(socket);
+        // stompClient.connect({}, this.onConnected, this.onError);
+        stompClient.connect(
+          {},
+          () => {
+            stompClient.subscribe(
+              `/user/${this.nickname}/queue/messages`
+              // , onMessageReceived
+            );
+            stompClient.subscribe(`/user/public`
+            // , onMessageReceived
+            );
+            stompClient.send(
+              "/app/user.addUser",
+              {},
+              JSON.stringify({
+                nickName: this.nickname,
+                fullName: this.fullname,
+                status: "ONLINE",
+              })
+            );
+            this.$router.push({
+              name: "ChatPage",
+              params: { nickname: this.nickname, fullname: this.fullname },
+            });
+          },
+          this.onError
+        );
       }
       event.preventDefault();
     },
-    // onConnected() {
-    //   stompClient.subscribe(
-    //     `/user/${this.nickname}/queue/messages`,
-    //     onMessageReceived
-    //   );
-    //   stompClient.subscribe(`/user/public`, onMessageReceived);
-
-    //   // register the connected user
-    //   stompClient.send(
-    //     "/app/user.addUser",
-    //     {},
-    //     JSON.stringify({
-    //       nickName: this.nickname,
-    //       fullName: this.fullname,
-    //       status: "ONLINE",
-    //     })
-    //   );
-    //   document.querySelector("#connected-user-fullname").textContent =
-    //     this.fullname;
-    //   findAndDisplayConnectedUsers().then();
-    // },
-    onConnect() {
-      const stompClient = this.$root.provides.stompClient;
-      stompClient.subscribe(`/user/${this.nickname}/queue/messages`, onMessageReceived);
-      stompClient.subscribe(`/user/public`, onMessageReceived);
-      stompClient.send(
-        "/app/user.addUser",
-        {},
-        JSON.stringify({
-          nickName: this.nickname,
-          fullName: this.fullname,
-          status: "ONLINE",
-        })
-      );
-      this.$router.push({
-        name: "ChatPage",
-        params: { nickname: this.nickname, fullname: this.fullname },
-      });
+    onError() {
+      this.error =
+        "Error connecting to WebSocket. Please refresh this page to try again!";
     },
   },
 };
@@ -146,5 +122,9 @@ export default {
 
 .hidden {
   display: none;
+}
+
+.error {
+  color: red;
 }
 </style>
